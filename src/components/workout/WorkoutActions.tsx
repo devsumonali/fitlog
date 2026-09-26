@@ -16,20 +16,20 @@ export default function WorkoutActions({ workout }: { workout: Workout }) {
                     type="button"
                     disabled={!ready || added || full}
                     onClick={() => addToPlan(workout)}
-                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-[13px] font-semibold text-black transition hover:bg-accent-bright disabled:opacity-50"
+                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl disabled:cursor-not-allowed bg-accent px-5 py-3 text-[13px] font-semibold text-black transition hover:bg-accent-bright disabled:opacity-50"
                >
                     <CalendarPlus size={17} />
                     {added
                          ? 'Already in your plan'
                          : full
-                           ? 'Plan full — finish a lift'
+                           ? 'Plan full finish a workout'
                            : "Add to today's plan"}
                </button>
                <button
                     type="button"
                     disabled={!ready || isSaved}
                     onClick={() => saveWorkout(workout)}
-                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-transparent px-5 py-3 text-[13px] font-medium text-text-light transition hover:bg-white/5 disabled:opacity-50"
+                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border disabled:cursor-not-allowed border-border bg-transparent px-5 py-3 text-[13px] font-medium text-text-light transition hover:bg-white/5 disabled:opacity-50"
                >
                     <Bookmark size={16} />
                     {isSaved ? 'Saved for later' : 'Save for later'}
