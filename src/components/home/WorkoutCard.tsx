@@ -1,6 +1,7 @@
 import { Workout } from '@/types/workout';
 import { Clock3, Flame, Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type WorkOutCardProps = {
      workout: Workout;
@@ -11,12 +12,14 @@ const WorkoutCard = ({ workout }: WorkOutCardProps) => {
           <article className="group overflow-hidden rounded-3xl border border-border bg-card">
                {/* Image */}
                <div className="relative h-62.5 w-full overflow-hidden">
-                    <Image
-                         src={workout.image}
-                         alt="Workout"
-                         fill
-                         className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <Link href={`/workout/${workout.id}`}>
+                         <Image
+                              src={workout.image}
+                              alt="Workout"
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                         />
+                    </Link>
                </div>
 
                {/* Card Content */}

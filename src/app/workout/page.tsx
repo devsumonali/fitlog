@@ -1,9 +1,11 @@
-const WorkOutPage = () => {
+import WorkoutLibrary from '@/components/home/WorkoutLibrary';
+
+const WorkoutPage = () => {
      return (
-          <div>
-               <h2>work out page</h2>
-          </div>
+          <main>
+               <WorkoutLibrary />
+          </main>
      );
 };
 
-export default WorkOutPage;
+export default WorkoutPage;

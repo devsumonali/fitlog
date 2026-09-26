@@ -9,4 +9,14 @@ const getWorkOuts = async (): Promise<Workout[]> => {
      return res.json();
 };
 
+export const getSingleWorkout = async (id: string): Promise<Workout> => {
+     const res = await fetch(`${API_URL}/${id}`);
+
+     if (!res.ok) {
+          throw new Error('Failed to fetch workout');
+     }
+
+     return res.json();
+};
+
 export default getWorkOuts;
