@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { usePlan } from '@/hooks/usePlan';
 import { Workout } from '@/types/workout';
 import { Clock3, Flame, Star, X } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type PlanWorkoutCardProps = {
      workout: Pick<

@@ -44,15 +44,6 @@ export function readPlan(raw: string | null): PlanData {
      }
 }
 
-export function filterWorkouts(workouts: Workout[], query: string) {
-     const term = query.trim().toLowerCase();
-     return workouts.filter((workout) =>
-          [workout.name, ...workout.muscleGroups].some((value) =>
-               value.toLowerCase().includes(term),
-          ),
-     );
-}
-
 export function sortWorkouts(workouts: Workout[], sortBy: SortBy) {
      return [...workouts].sort((a, b) =>
           sortBy === 'rating' ? b.rating - a.rating : a[sortBy] - b[sortBy],

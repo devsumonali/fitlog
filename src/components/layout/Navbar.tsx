@@ -20,7 +20,7 @@ const Navbar = () => {
 
      return (
           <>
-               <header className="border-b border-[#1C1F26] px-5  lg:px-0 py-4">
+               <header className="border-b border-[#1C1F26] py-4">
                     <nav className="container-custom flex items-center justify-between">
                          {/* Logo */}
                          <div>

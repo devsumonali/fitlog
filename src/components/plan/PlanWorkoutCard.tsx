@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { usePlan } from '@/hooks/usePlan';
 import { Workout } from '@/types/workout';
 import { Check, Clock3, Flame, Star, X } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type PlanWorkoutCardProps = {
      workout: Pick<
@@ -67,7 +67,7 @@ const PlanWorkoutCard = ({ workout, variant = 'today' }: PlanWorkoutCardProps) =
                               type="button"
                               disabled={isDone}
                               onClick={() => dispatch({ type: 'done', id: workout.id })}
-                              className="inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed rounded-full bg-accent px-4 py-2 text-[12px] font-semibold text-black"
+                              className="inline-flex items-center gap-2 disabled:opacity-50 rounded-full bg-accent px-4 py-2 text-[12px] font-semibold text-black"
                          >
                               <Check size={14} aria-hidden="true" />
                               {isDone ? 'Completed' : 'Mark as Done'}
@@ -75,7 +75,12 @@ const PlanWorkoutCard = ({ workout, variant = 'today' }: PlanWorkoutCardProps) =
                     )}
                     <button
                          type="button"
-                         onClick={() => dispatch({ type: variant === 'today' ? 'remove-today' : 'remove-saved', id: workout.id })}
+                         onClick={() =>
+                              dispatch({
+                                   type: variant === 'today' ? 'remove-today' : 'remove-saved',
+                                   id: workout.id,
+                              })
+                         }
                          aria-label={`Remove ${workout.name}`}
                          className="flex size-8 items-center justify-center text-text-muted"
                     >

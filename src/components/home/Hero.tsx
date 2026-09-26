@@ -4,7 +4,7 @@ import { ArrowDown } from 'lucide-react';
 
 const HeroSection = () => {
      return (
-          <div className="my-2 lg:my-5 p-5 lg:p-0">
+          <div className="my-2 lg:my-5 py-5 lg:py-0">
                <div className="py-6 lg:py-12.5 px-4 lg:px-8 container-custom bg-card border border-[#222630] rounded-2xl">
                     <div className="flex flex-col lg:flex-row justify-between gap-5 items-center ">
                          <div className="space-y-3 w-full lg:w-[52%]">

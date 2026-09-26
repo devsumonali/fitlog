@@ -31,6 +31,19 @@
           margin: 0;
           box-sizing: border-box;
      }
+
+     button,
+     [role='button'],
+     input[type='button'],
+     input[type='submit'],
+     input[type='reset'],
+     select {
+          cursor: pointer;
+     }
+}
+
+html {
+     scrollbar-gutter: stable;
 }
 
 body {
@@ -49,7 +62,7 @@ h6 {
 }
 
 .container-custom {
-     width: 100%;
+     width: calc(100% - 40px);
      max-width: 1280px;
      margin: 0 auto;
 }

@@ -1,5 +1,5 @@
-import { getSingleWorkout } from '@/constants/api';
 import WorkoutActions from '@/components/workout/WorkoutActions';
+import { getSingleWorkout } from '@/constants/api';
 import Image from 'next/image';
 
 type Props = {
@@ -21,7 +21,7 @@ const WorkOutDetailsPage = async ({ params }: Props) => {
      ];
 
      return (
-          <main className="my-6 lg:my-12.5 p-5 lg:p-0">
+          <main className="my-6 lg:my-12.5 py-5 lg:py-0">
                <div className="container-custom">
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
                          {/* Left Image */}
