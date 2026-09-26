@@ -15,7 +15,7 @@ type PlanWorkoutCardProps = {
 };
 
 const PlanWorkoutCard = ({ workout, variant = 'today' }: PlanWorkoutCardProps) => {
-     const { completed, dispatch } = usePlan();
+     const { completed, markAsDone, removeWorkout } = usePlan();
      const isDone = completed.includes(workout.id);
      return (
           <article className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 md:flex-row md:items-center md:justify-between">
@@ -66,7 +66,7 @@ const PlanWorkoutCard = ({ workout, variant = 'today' }: PlanWorkoutCardProps) =
                          <button
                               type="button"
                               disabled={isDone}
-                              onClick={() => dispatch({ type: 'done', id: workout.id })}
+                              onClick={() => markAsDone(workout.id)}
                               className="inline-flex items-center gap-2 disabled:opacity-50 rounded-full bg-accent px-4 py-2 text-[12px] font-semibold text-black"
                          >
                               <Check size={14} aria-hidden="true" />
@@ -75,12 +75,7 @@ const PlanWorkoutCard = ({ workout, variant = 'today' }: PlanWorkoutCardProps) =
                     )}
                     <button
                          type="button"
-                         onClick={() =>
-                              dispatch({
-                                   type: variant === 'today' ? 'remove-today' : 'remove-saved',
-                                   id: workout.id,
-                              })
-                         }
+                         onClick={() => removeWorkout(workout.id, variant)}
                          aria-label={`Remove ${workout.name}`}
                          className="flex size-8 items-center justify-center text-text-muted"
                     >

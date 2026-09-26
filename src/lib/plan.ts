@@ -1,42 +1,64 @@
-import type { Workout } from '../types/workout';
+import type { Workout } from '@/types/workout';
 
-export type PlanData = { today: Workout[]; saved: Workout[]; completed: number[] };
+export type PlanData = {
+     today: Workout[];
+     saved: Workout[];
+     completed: number[];
+};
 export type SortBy = 'duration' | 'caloriesBurned' | 'rating';
 export const PLAN_LIMIT = 5;
 export const emptyPlan: PlanData = { today: [], saved: [], completed: [] };
 
+// Ignore damaged JSON entries before displaying stored workouts.
+function isValidWorkout(workout: Workout) {
+     return (
+          workout !== null &&
+          typeof workout === 'object' &&
+          Number.isFinite(workout.id) &&
+          typeof workout.name === 'string' &&
+          typeof workout.image === 'string' &&
+          typeof workout.equipment === 'string' &&
+          Number.isFinite(workout.duration) &&
+          Number.isFinite(workout.caloriesBurned) &&
+          Number.isFinite(workout.rating) &&
+          Number.isFinite(workout.sets) &&
+          typeof workout.reps === 'string' &&
+          typeof workout.difficulty === 'string' &&
+          typeof workout.description === 'string' &&
+          Array.isArray(workout.muscleGroups) &&
+          workout.muscleGroups.every((group) => typeof group === 'string') &&
+          Array.isArray(workout.instructions) &&
+          workout.instructions.every((step) => typeof step === 'string')
+     );
+}
+
+function cleanWorkouts(workouts: Workout[]) {
+     const validWorkouts = workouts.filter(isValidWorkout);
+     return validWorkouts.filter(
+          (workout, index) => validWorkouts.findIndex((item) => item.id === workout.id) === index,
+     );
+}
+
 export function readPlan(raw: string | null): PlanData {
+     if (!raw) return emptyPlan;
      try {
-          const data = JSON.parse(raw ?? 'null');
+          const data: PlanData = JSON.parse(raw);
           if (!data || !Array.isArray(data.today) || !Array.isArray(data.saved)) return emptyPlan;
-          const valid = (value: unknown): value is Workout => {
-               if (!value || typeof value !== 'object') return false;
-               const item = value as Record<string, unknown>;
-               return (
-                    ['id', 'duration', 'caloriesBurned', 'rating', 'sets'].every(
-                         (key) => typeof item[key] === 'number' && Number.isFinite(item[key]),
-                    ) &&
-                    ['name', 'image', 'equipment', 'difficulty', 'reps', 'description'].every(
-                         (key) => typeof item[key] === 'string',
-                    ) &&
-                    ['muscleGroups', 'instructions'].every(
-                         (key) =>
-                              Array.isArray(item[key]) &&
-                              item[key].every((entry: unknown) => typeof entry === 'string'),
-                    )
-               );
-          };
-          const unique = (items: unknown[]): Workout[] => [
-               ...new Map(items.filter(valid).map((item) => [item.id, item])).values(),
-          ];
-          const today = unique(data.today);
+
+          const today = cleanWorkouts(data.today);
+          const saved = cleanWorkouts(data.saved);
           const completed = Array.isArray(data.completed)
-               ? today.filter((item) => data.completed.includes(item.id)).map((item) => item.id)
+               ? today
+                      .filter((workout) => data.completed.includes(workout.id))
+                      .map((workout) => workout.id)
                : [];
-          let active = 0;
+          const activeWorkouts = today.filter((workout) => !completed.includes(workout.id));
+          const allowedIds = activeWorkouts.slice(0, PLAN_LIMIT).map((workout) => workout.id);
           return {
-               today: today.filter((item) => completed.includes(item.id) || ++active <= PLAN_LIMIT),
-               saved: unique(data.saved),
+               today: today.filter(
+                    (workout) => completed.includes(workout.id) || allowedIds.includes(workout.id),
+               ),
+               saved,
                completed,
           };
      } catch {
@@ -45,65 +67,9 @@ export function readPlan(raw: string | null): PlanData {
 }
 
 export function sortWorkouts(workouts: Workout[], sortBy: SortBy) {
-     return [...workouts].sort((a, b) =>
-          sortBy === 'rating' ? b.rating - a.rating : a[sortBy] - b[sortBy],
-     );
-}
-
-export type PlanAction =
-     | { type: 'add'; workout: Workout }
-     | { type: 'save'; workout: Workout }
-     | { type: 'done'; id: number }
-     | { type: 'remove-today'; id: number }
-     | { type: 'remove-saved'; id: number };
-
-export function updatePlan(
-     data: PlanData,
-     action: PlanAction,
-): { data: PlanData; message: string; error?: boolean } {
-     if (action.type === 'add' || action.type === 'save') {
-          const key = action.type === 'add' ? 'today' : 'saved';
-          if (data[key].some((item) => item.id === action.workout.id))
-               return {
-                    data,
-                    message: key === 'today' ? 'Already in your plan' : 'Already saved',
-                    error: true,
-               };
-          if (
-               key === 'today' &&
-               data.today.filter((item) => !data.completed.includes(item.id)).length >= PLAN_LIMIT
-          )
-               return {
-                    data,
-                    message: 'Finish a lift before adding more (maximum five active lifts)',
-                    error: true,
-               };
-          return {
-               data: { ...data, [key]: [...data[key], action.workout] },
-               message: key === 'today' ? "Added to today's plan" : 'Saved for later',
-          };
-     }
-     if (action.type === 'done') {
-          if (
-               !data.today.some((item) => item.id === action.id) ||
-               data.completed.includes(action.id)
-          )
-               return { data, message: 'Workout already completed or removed', error: true };
-          return {
-               data: { ...data, completed: [...data.completed, action.id] },
-               message: 'Workout marked as done',
-          };
-     }
-     const key = action.type === 'remove-today' ? 'today' : 'saved';
-     return {
-          data: {
-               ...data,
-               [key]: data[key].filter((item) => item.id !== action.id),
-               completed:
-                    key === 'today'
-                         ? data.completed.filter((id) => id !== action.id)
-                         : data.completed,
-          },
-          message: key === 'today' ? 'Removed from your plan' : 'Removed from saved workouts',
-     };
+     const sortedWorkouts = [...workouts];
+     if (sortBy === 'rating') return sortedWorkouts.sort((a, b) => b.rating - a.rating);
+     if (sortBy === 'caloriesBurned')
+          return sortedWorkouts.sort((a, b) => a.caloriesBurned - b.caloriesBurned);
+     return sortedWorkouts.sort((a, b) => a.duration - b.duration);
 }

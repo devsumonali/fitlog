@@ -12,7 +12,7 @@ const Navbar = () => {
      const { today, saved } = usePlan();
      const [isOpen, setIsOpen] = useState(false);
 
-     const isWorkoutsActive = pathname === '/' || pathname === '/workout' || pathname.startsWith('/workout/');
+     const isWorkoutsActive = pathname === '/workout' || pathname.startsWith('/workout/');
 
      const isMyPlanActive = pathname === '/my-plan' || pathname.startsWith('/my-plan/');
 

@@ -15,7 +15,7 @@ type PlanWorkoutCardProps = {
 };
 
 const PlanWorkOutSavedCard = ({ workout }: PlanWorkoutCardProps) => {
-     const { dispatch } = usePlan();
+     const { removeWorkout } = usePlan();
      return (
           <article className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 md:flex-row md:items-center md:justify-between">
                <div className="flex min-w-0 items-center gap-4">
@@ -64,7 +64,7 @@ const PlanWorkOutSavedCard = ({ workout }: PlanWorkoutCardProps) => {
 
                     <button
                          type="button"
-                         onClick={() => dispatch({ type: 'remove-saved', id: workout.id })}
+                         onClick={() => removeWorkout(workout.id, 'saved')}
                          aria-label={`Remove ${workout.name}`}
                          className="flex size-8 items-center justify-center text-text-muted"
                     >

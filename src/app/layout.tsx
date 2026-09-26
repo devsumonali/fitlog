@@ -1,6 +1,7 @@
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 import ToastProvider from '@/components/layout/ToastProvider';
+import PlanProvider from '@/context/PlanContext';
 import type { Metadata } from 'next';
 import { Inter, Oswald } from 'next/font/google';
 import './globals.css';
@@ -24,12 +25,14 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
      return (
           <html lang="en" className={`${inter.variable} ${oswald.variable} h-full antialiased`}>
                <body className="min-h-full flex flex-col">
-                    <ToastProvider />
-                    <Navbar />
+                    <PlanProvider>
+                         <ToastProvider />
+                         <Navbar />
 
-                    <main>{children}</main>
+                         <main>{children}</main>
 
-                    <Footer />
+                         <Footer />
+                    </PlanProvider>
                </body>
           </html>
      );

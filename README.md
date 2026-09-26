@@ -32,11 +32,20 @@ FitLog helps you explore exercises, understand each lift, and build a focused wo
 | React Hot Toast | Action feedback and notifications                          |
 | localStorage    | Browser-local plan and saved-workout persistence           |
 
+## Concepts used
+
+- **Components and props:** Headers, workout cards, metrics, and buttons receive the data they display.
+- **Context API and useState:** `src/context/PlanContext.tsx` shares plan, saved workouts, and completion state across pages. Buttons call named event handlers directly.
+- **useEffect:** Restores localStorage data after mounting and listens for changes from other browser tabs, with listener cleanup on unmount.
+- **Event handling and JSON:** Add, save, complete, and remove handlers update state and persist the updated data with `JSON.stringify`. Reloading restores it with `JSON.parse`.
+- **Array methods and conditional rendering:** `map`, `filter`, `some`, `includes`, `reduce`, and `sort` power lists, totals, limits, sorting, and empty states.
+- **Server/Client Components and routing:** Server Components fetch API data; Client Components handle interactions. `/workout/[id]` uses dynamic routing for exercise details.
+
 ## Pages
 
 | Route           | Page                                                 |
 | --------------- | ---------------------------------------------------- |
-| `/`             | Home, hero, and searchable workout library           |
+| `/`             | Home, hero, and workout library           |
 | `/workout`      | Workout library                                      |
 | `/workout/[id]` | Exercise details, instructions, and Add/Save actions |
 | `/my-plan`      | Today's Plan and Saved tabs                          |
