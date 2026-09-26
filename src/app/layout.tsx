@@ -1,5 +1,6 @@
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
+import ToastProvider from '@/components/layout/ToastProvider';
 import type { Metadata } from 'next';
 import { Inter, Oswald } from 'next/font/google';
 import './globals.css';
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
      return (
           <html lang="en" className={`${inter.variable} ${oswald.variable} h-full antialiased`}>
                <body className="min-h-full flex flex-col">
+                    <ToastProvider />
                     <Navbar />
 
                     <main>{children}</main>

@@ -7,7 +7,7 @@ const Footer = () => {
                <div className="container-custom flex flex-col lg:flex-row justify-between gap-5 items-center">
                     <Link href="/" className="flex items-center gap-4">
                          <Image
-                              src="/images/svg.png"
+                              src="/images/SVG.png"
                               alt="footer logo"
                               width={20}
                               height={20}

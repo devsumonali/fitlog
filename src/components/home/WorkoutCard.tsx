@@ -9,17 +9,15 @@ type WorkOutCardProps = {
 
 const WorkoutCard = ({ workout }: WorkOutCardProps) => {
      return (
-          <article className="group overflow-hidden rounded-3xl border border-border bg-card">
+          <article className="group relative overflow-hidden rounded-3xl border border-border bg-card">
                {/* Image */}
                <div className="relative h-62.5 w-full overflow-hidden">
-                    <Link href={`/workout/${workout.id}`}>
                          <Image
                               src={workout.image}
                               alt="Workout"
                               fill
                               className="object-cover transition-transform duration-300 group-hover:scale-105"
                          />
-                    </Link>
                </div>
 
                {/* Card Content */}
@@ -38,7 +36,9 @@ const WorkoutCard = ({ workout }: WorkOutCardProps) => {
 
                     {/* Title */}
                     <h3 className="font-heading text-[24px] font-bold uppercase leading-tight text-text-primary">
-                         {workout.name}
+                         <Link href={`/workout/${workout.id}`} className="after:absolute after:inset-0 focus-visible:outline-accent">
+                              {workout.name}
+                         </Link>
                     </h3>
 
                     {/* Equipment */}

@@ -5,12 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { usePlan } from '@/hooks/usePlan';
 
 const Navbar = () => {
      const pathname = usePathname();
+     const { today, saved } = usePlan();
      const [isOpen, setIsOpen] = useState(false);
 
-     const isWorkoutsActive = pathname === '/workout' || pathname.startsWith('/workout/');
+     const isWorkoutsActive = pathname === '/' || pathname === '/workout' || pathname.startsWith('/workout/');
 
      const isMyPlanActive = pathname === '/my-plan' || pathname.startsWith('/my-plan/');
 
@@ -76,7 +78,7 @@ const Navbar = () => {
                               >
                                    Plan
                                    <span className="flex size-5 items-center justify-center rounded-full bg-accent text-[12px] font-semibold text-black">
-                                        0
+                                        {today.length}
                                    </span>
                               </Link>
 
@@ -86,7 +88,7 @@ const Navbar = () => {
                               >
                                    Saved
                                    <span className="flex size-5 items-center justify-center rounded-full border border-border text-[12px] text-text-light">
-                                        0
+                                        {saved.length}
                                    </span>
                               </Link>
                          </div>
@@ -183,7 +185,7 @@ const Navbar = () => {
                                    <span>Plan</span>
 
                                    <span className="flex size-6 items-center justify-center rounded-full bg-accent text-[12px] font-semibold text-black">
-                                        0
+                                        {today.length}
                                    </span>
                               </Link>
 
@@ -195,7 +197,7 @@ const Navbar = () => {
                                    <span>Saved</span>
 
                                    <span className="flex size-6 items-center justify-center rounded-full border border-border text-[12px] text-text-light">
-                                        0
+                                        {saved.length}
                                    </span>
                               </Link>
                          </div>

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowDown } from 'lucide-react';
 
 const HeroSection = () => {
      return (
@@ -17,10 +18,9 @@ const HeroSection = () => {
                                    FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
                                    into today&lsquo;s plan, and watch the week&lsquo;s work add up.
                               </p>
-                              <Link className="" href={'/workout'}>
-                                   <button className="cursor-pointer bg-accent py-2.5 px-4.5 rounded-2xl font-body uppercase text-[12px] text-black font-bold mt-3">
+                              <Link href="#library" className="inline-flex items-center gap-2 cursor-pointer bg-accent py-2.5 px-4.5 rounded-2xl font-body uppercase text-[12px] text-black font-bold mt-3">
+                                        <ArrowDown size={16} aria-hidden="true" />
                                         BROWSE WORKOUTS
-                                   </button>
                               </Link>
                          </div>
 

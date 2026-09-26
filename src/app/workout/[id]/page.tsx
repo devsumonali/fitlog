@@ -1,5 +1,5 @@
 import { getSingleWorkout } from '@/constants/api';
-import { Bookmark, CalendarPlus } from 'lucide-react';
+import WorkoutActions from '@/components/workout/WorkoutActions';
 import Image from 'next/image';
 
 type Props = {
@@ -106,24 +106,7 @@ const WorkOutDetailsPage = async ({ params }: Props) => {
                                    </ol>
                               </section>
 
-                              {/* Buttons */}
-                              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                                   <button
-                                        type="button"
-                                        className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-[13px] font-semibold text-black transition hover:bg-accent-bright"
-                                   >
-                                        <CalendarPlus size={17} />
-                                        Add to today&apos;s plan
-                                   </button>
-
-                                   <button
-                                        type="button"
-                                        className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-transparent px-5 py-3 text-[13px] font-medium text-text-light transition hover:bg-white/5"
-                                   >
-                                        <Bookmark size={16} />
-                                        Save for later
-                                   </button>
-                              </div>
+                              <WorkoutActions workout={workout} />
                          </div>
                     </div>
                </div>
